@@ -12,5 +12,9 @@ class OrderController extends Controller
         $order = new Order();
 
         $order->save();
+
+        return response()->json([
+            $order,
+        ], 201);
     }
 }
