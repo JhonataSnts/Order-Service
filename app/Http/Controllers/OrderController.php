@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
-use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreOrderRequest $request)
     {
         $order = new Order();
 
-        $order->save();
+        $order->request->save();
 
         return response()->json([
             $order,
