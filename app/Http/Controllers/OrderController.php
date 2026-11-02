@@ -11,7 +11,10 @@ class OrderController extends Controller
     {
         $order = new Order();
 
-        $order->request->save();
+        $validated = $request->validated();
+
+        dd($validated);
+        
 
         return response()->json([
             $order,

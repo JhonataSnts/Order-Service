@@ -25,7 +25,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'customer_id' => 'required|integer|min:1',
             'items' => 'required|array|min:1',
-            'items.*' => 'required|array',
+            'items.*' => 'required|array:product_id,quantity',
             'items.*.product_id' => 'required|integer|min:1',
             'items.*.quantity' => 'required|integer|min:1',
         ];
