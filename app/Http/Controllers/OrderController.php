@@ -13,8 +13,9 @@ class OrderController extends Controller
 
         $validated = $request->validated();
 
-        dd($validated);
-        
+        $order->customer_id = $validated['customer_id'];
+
+        $order->save();
 
         return response()->json([
             $order,
