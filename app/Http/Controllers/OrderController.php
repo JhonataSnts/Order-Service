@@ -14,6 +14,7 @@ class OrderController extends Controller
         $validated = $request->validated();
 
         $order->customer_id = $validated['customer_id'];
+        $order->status = 'draft';
 
         $order->save();
 
