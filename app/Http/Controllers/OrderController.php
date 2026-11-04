@@ -19,6 +19,9 @@ class OrderController extends Controller
             310 => 80.00,
         ];
 
+        $total = 0;
+        $orderItems = [];
+
         foreach ($validated['items'] as $item) {
             $productId = $item['product_id'];
             
@@ -29,14 +32,20 @@ class OrderController extends Controller
             $unitPrice = $prices[$productId];
             $quantity = $item['quantity'];
             $subtotal = $unitPrice * $quantity;
-            dump($subtotal);
+            $total += $subtotal;
+
+            $itemData = [
+                'product_id' => $productId,
+                'quantity' => $quantity,
+                'unit_price' => $unitPrice,
+            ];
+
+            $orderItems[] = $itemData;
+            dump($orderItems);
         }
         
         $savedOrder = DB::transaction(function () use ($request, $validated){
         $order = new Order();
-
-        
-
         $order->customer_id = $validated['customer_id'];
         $order->status = 'draft';
         $order->save();
@@ -50,3 +59,4 @@ class OrderController extends Controller
         ], 201);
     }
 }
+
