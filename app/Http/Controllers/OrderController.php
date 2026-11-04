@@ -21,10 +21,15 @@ class OrderController extends Controller
 
         foreach ($validated['items'] as $item) {
             $productId = $item['product_id'];
-
+            
             if (!isset($prices[$productId])) {
                 abort(422, 'O produto com ID ' . $productId . ' não possui preço cadastrado.');
             } 
+
+            $unitPrice = $prices[$productId];
+            $quantity = $item['quantity'];
+            $subtotal = $unitPrice * $quantity;
+            dump($subtotal);
         }
         
         $savedOrder = DB::transaction(function () use ($request, $validated){
