@@ -41,13 +41,13 @@ class OrderController extends Controller
             ];
 
             $orderItems[] = $itemData;
-            dump($orderItems);
         }
-        
-        $savedOrder = DB::transaction(function () use ($request, $validated){
+
+        $savedOrder = DB::transaction(function () use ($request, $validated, $total){
         $order = new Order();
         $order->customer_id = $validated['customer_id'];
         $order->status = 'draft';
+        $order->total = $total;
         $order->save();
 
         return $order;
