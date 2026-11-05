@@ -29,18 +29,18 @@ class OrderTest extends TestCase
             'customer_id' => 1,
             'items' => [
                 [
-                'product_id' => 101,
-                'quantity' => 2
+                    'product_id' => 101,
+                    'quantity' => 2
                 ],
 
                 [
-                'product_id' => 205,
-                'quantity' => 3
+                    'product_id' => 205,
+                    'quantity' => 3
                 ],
 
                 [
-                'product_id' => 310,
-                'quantity' => 1
+                    'product_id' => 310,
+                    'quantity' => 1
                 ]
             ]
         ]);
@@ -80,5 +80,25 @@ class OrderTest extends TestCase
             'quantity' => 1,
             'unit_price' => 80.00
         ]);
+    }
+
+    public function test_order_is_not_created_with_unknown_product(): void
+    {
+        $response = $this->postJson('/api/orders', [
+            'customer_id' => 1,
+            'items' => [
+                [
+                    'product_id' => 999,
+                    'quantity' => 1
+                ]
+            ]
+        ]);
+
+        $response
+            ->assertStatus(422);
+
+        $this->assertDatabaseCount('orders', 0);
+
+        $this->assertDatabaseCount('order_items', 0);
     }
 }
