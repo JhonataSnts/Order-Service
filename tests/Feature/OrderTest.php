@@ -156,4 +156,24 @@ class OrderTest extends TestCase
         $this->assertDatabaseCount('order_items', 0);
         
     }
+
+    public function test_order_is_not_created_with_invalid_customer_id(): void
+    {
+        $response = $this->postJson('/api/orders', [
+            'customer_id' => 0,
+            'items' => [
+                [
+                    'product_id' => 101,
+                    'quantity' => 2
+                ]
+            ]
+        ]);
+
+        $response
+            ->assertStatus(422);
+        
+        $this->assertDatabaseCount('orders', 0);
+
+        $this->assertDatabaseCount('order_items', 0);
+    }
 }
