@@ -50,5 +50,10 @@ class OrderTest extends TestCase
             ->assertJson([
                 'message' => 'Pedido criado com sucesso!',
             ]);
+
+        $this->assertDatabaseHas('orders', [
+            'customer_id' => 1,
+            'total' => 530
+        ]);
     }
 }
