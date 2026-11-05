@@ -55,5 +55,13 @@ class OrderTest extends TestCase
             'customer_id' => 1,
             'total' => 530
         ]);
+
+        $this->assertDatabaseCount('order_items', 3);
+
+        $this->assertDatabaseHas('order_items', [
+            'product_id' => 101,
+            'quantity' => 2,
+            'unit_price' => 150.00
+        ]);
     }
 }
