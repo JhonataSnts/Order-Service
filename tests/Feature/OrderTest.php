@@ -176,4 +176,18 @@ class OrderTest extends TestCase
 
         $this->assertDatabaseCount('order_items', 0);
     }
+
+    public function test_order_is_not_created_without_items(): void
+    {
+        $response = $this->postJson('/api/orders', [
+            'customer_id' => 1
+        ]);
+
+        $response
+            ->assertStatus(422);
+        
+        $this->assertDatabaseCount('orders', 0);
+
+        $this->assertDatabaseCount('order_items', 0);
+    }
 }
