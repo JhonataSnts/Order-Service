@@ -51,6 +51,8 @@ class OrderTest extends TestCase
                 'message' => 'Pedido criado com sucesso!',
             ]);
 
+        $orderId = $response['order_id'];
+
         $this->assertDatabaseHas('orders', [
             'customer_id' => 1,
             'total' => 530
@@ -59,9 +61,24 @@ class OrderTest extends TestCase
         $this->assertDatabaseCount('order_items', 3);
 
         $this->assertDatabaseHas('order_items', [
+            'order_id' => $orderId,
             'product_id' => 101,
             'quantity' => 2,
             'unit_price' => 150.00
+        ]);
+
+        $this->assertDatabaseHas('order_items', [
+            'order_id' => $orderId,
+            'product_id' => 205,
+            'quantity' => 3,
+            'unit_price' => 50.00
+        ]);
+
+        $this->assertDatabaseHas('order_items', [
+            'order_id' => $orderId,
+            'product_id' => 310,
+            'quantity' => 1,
+            'unit_price' => 80.00
         ]);
     }
 }
