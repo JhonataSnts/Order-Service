@@ -10,14 +10,7 @@ class OrderController extends Controller
 {
     public function store(StoreOrderRequest $request)
     {
-
         $validated = $request->validated();
-
-        $prices = [
-            101 => 150.00,
-            205 => 50.00,
-            310 => 80.00,
-        ];
 
         $total = 0;
         $orderItems = [];
@@ -54,7 +47,7 @@ class OrderController extends Controller
         
         return $order;
 
-    });
+        });
 
         return response()->json([
             'message' => 'Pedido criado com sucesso!',
