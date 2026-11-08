@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
+use App\Services\CreateOrderService;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $request, CreateOrderService $createOrderService)
     {
         $validated = $request->validated();
+
+        $createOrderService->create($validated);
+
+        $savedOrder = $createOrderService->create($validated);
 
         $total = 0;
         $orderItems = [];
