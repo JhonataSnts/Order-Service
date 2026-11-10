@@ -19,6 +19,10 @@ class SendOrderNotification implements ShouldQueue
         
     }
 
+    public int $tries = 3;
+
+    public array $backoff = [10, 30];
+
     /**
      * Execute the job.
      */
