@@ -40,16 +40,19 @@ class CreateOrderService
         }
         
         $savedOrder = DB::transaction(function () use ($validated, $total, $orderItems){
-        $order = new Order();
-        $order->customer_id = $validated['customer_id'];
-        $order->status = 'draft';
-        $order->total = $total;
-        $order->save();
+            $order = new Order();
+            $order->customer_id = $validated['customer_id'];
+            $order->status = 'draft';
+            $order->total = $total;
+            $order->save();
 
-        $order->items()->createMany($orderItems);
+            $order->items()->createMany($orderItems);
+
+            $order->notification()->create([
+                'status' => 'pending'
+            ]);
         
-        return $order;
-
+            return $order;
         });
 
         return $savedOrder;
