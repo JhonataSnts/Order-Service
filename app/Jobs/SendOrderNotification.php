@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Order;
+use App\Models\SentNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,7 @@ class SendOrderNotification implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Order $order)
+    public function __construct(public SentNotification $notification)
     {
         
     }
@@ -31,6 +32,6 @@ class SendOrderNotification implements ShouldQueue
 
         
 
-        Log::info('Notificação do pedido processada com sucesso.' . $this->order->id);
+        Log::info('Notificação do pedido processada com sucesso.' . $this->notification->id);
     }
 }
