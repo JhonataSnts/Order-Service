@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Models\Order;
 use App\Models\SentNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
@@ -29,9 +28,11 @@ class SendOrderNotification implements ShouldQueue
      */
     public function handle(): void
     {
-
+        if ($this->notification->status === 'sent') {
+            
+            return; 
+        }
         
-
         Log::info('Notificação do pedido processada com sucesso.' . $this->notification->id);
     }
 }

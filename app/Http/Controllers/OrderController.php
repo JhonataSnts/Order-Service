@@ -14,7 +14,7 @@ class OrderController extends Controller
 
         $savedOrder = $createOrderService->create($validated);
 
-        SendOrderNotification::dispatch($savedOrder);
+        SendOrderNotification::dispatch($savedOrder->notification);
 
         return response()->json([
             'message' => 'Pedido criado com sucesso!',
